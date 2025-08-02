@@ -57,3 +57,14 @@
 -- Result table is ordered by the ctr. in case of a tie we order them by ad_id
 
 -- Solution
+
+SELECT 
+    ad_id,
+    ROUND(
+        SUM(IF(action = 'Clicked', 1, 0)) * 100.0 / 
+        NULLIF(SUM(IF(action IN ('Clicked', 'Viewed'), 1, 0)), 0),
+        2
+    ) AS ctr
+FROM Ads
+GROUP BY ad_id
+ORDER BY ctr DESC, ad_id ASC;
