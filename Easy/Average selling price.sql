@@ -67,6 +67,7 @@
 
 -- Solution
 
+
 select P.product_id , round(sum(P.Price * U.units )/ count(P.product_id), 2);
 from Prices P
 left join UnitsSold U on P.product_id = U.product_id and U.purchase_date between P.start_date and P.end_date

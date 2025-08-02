@@ -22,3 +22,10 @@
 -- If there is no such number, just output null.
 
 -- Solution
+SELECT MAX(num) AS num
+FROM (
+  SELECT num
+  FROM my_numbers
+  GROUP BY num
+  HAVING COUNT(num) = 1
+) AS unique_nums;
