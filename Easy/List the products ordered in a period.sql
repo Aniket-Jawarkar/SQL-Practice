@@ -76,3 +76,9 @@
 -- Products with product_id = 5 is ordered in February a total of (50 + 50) = 100.
 
 -- Solution
+SELECT product_name , sum(O.unit) 
+from Products P
+right join Orders O on P.product_id = O.product_id
+where O.order_date between 2020-02-01 and 2020-02-29    
+group by O.product_id, P.product_name
+having sum(O.unit) >= 100
