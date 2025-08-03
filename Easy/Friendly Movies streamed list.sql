@@ -43,3 +43,9 @@
 -- "Cinderella" was not streamed in June 2020.
 
 -- Solution
+
+
+SELECT C.title
+from Content C
+left join TVProgram T on C.content_id = T.content_id
+where Kids_content = 'Y' and content_type ='Movies' and T.program_date between 2020-06-01 and 2020-06-30;

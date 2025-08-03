@@ -36,9 +36,17 @@
 -- |     4       |     1      |
 -- |     5       |     2      |
 -- |     6       |     2      |
--- +-------------+------------+
+-- +-------------+------------+x
 -- Employees with Id 1,2,3 are part of a team with team_id = 8.
 -- Employees with Id 4 is part of a team with team_id = 7.
 -- Employees with Id 5,6 are part of a team with team_id = 9.
 
 -- Solution
+
+
+SELECT e.employee_id,  COUNT(t.employee_id) AS team_size
+FROM  Employee e
+JOIN Employee t ON e.team_id = t.team_id
+GROUP BY e.employee_id;
+
+

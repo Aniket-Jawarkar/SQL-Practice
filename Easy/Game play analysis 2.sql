@@ -40,3 +40,8 @@
 
 
 -- Solution
+SELECT player_id, device_id
+from Activity
+where (player_id, event_date) in (SELECT player_id, MIN(event_date) AS first_login
+FROM Activity
+GROUP BY player_id;)

@@ -3,7 +3,7 @@
  
 
 -- Table: friend_request
--- | sender_id | send_to_id |request_date|
+-- | sender_id | send_to_id |request_date|      
 -- |-----------|------------|------------|
 -- | 1         | 2          | 2016_06-01 |
 -- | 1         | 3          | 2016_06-01 |
@@ -43,3 +43,10 @@
 -- So the rate is 0.80.
 
 -- Solution
+
+
+SELECT ifnull(round( 
+        (SELECT count(distinct  sender_id , send_to_id from friend_request)
+         )/
+         (SELECT COUNT(DISTINCT sender_id, send_to_id) FROM friend_request)
+        , 2) , 0) as accept_rate;

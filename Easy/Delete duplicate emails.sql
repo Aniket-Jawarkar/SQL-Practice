@@ -19,3 +19,7 @@
 -- +----+------------------+
 
 -- Solution
+
+delete P1.*
+from Person P1
+join Person p2 on P1.Email = p2.Email and P1.Id > P2.Id;

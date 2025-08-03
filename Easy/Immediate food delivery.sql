@@ -40,3 +40,11 @@
 -- The orders with delivery id 2 and 3 are immediate while the others are scheduled.
 
 -- Solution
+SELECT 
+  ROUND(
+    100.0 * 
+      (SELECT COUNT(*) FROM Delivery WHERE order_date = customer_pref_delivery_date) 
+    / 
+      NULLIF(COUNT(*), 0)
+  , 2) AS immediate_percentage
+FROM Delivery;

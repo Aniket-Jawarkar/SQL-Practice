@@ -20,3 +20,7 @@
 -- +----------+
 
 -- Solution
+select E.Name
+from Employee E
+left join Employee M on E.ManagerId = M.Id
+where E.Salary > M.Salary;
