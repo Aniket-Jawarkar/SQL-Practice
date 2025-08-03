@@ -56,3 +56,7 @@
 -- +--------------+-------+-------+
 
 -- Solution
+
+select P.product_name, S.year, S.price
+from Sales S
+left join Product p on S.product_id = P.product_id
