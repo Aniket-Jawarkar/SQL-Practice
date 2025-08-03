@@ -44,3 +44,41 @@
 -- For session_id 5 has a duration greater or equal than 15 minutes.
 
 -- Solution 2
+
+select '[0-5>' as bin  , (select count(session_id)
+from Sessions
+where duration < 300) as total
+
+union all
+
+select '[5-10>' , (select count(session_id)
+from Sessions
+where duration > 300 and duration < 600)
+
+union all
+
+select '[10-15>' (select count(session_id)
+from Sessions
+where duration > 600 and duration < 900)
+
+union all
+
+select  '15 or more' (select count(session_id)
+from Sessions
+where duration > 900 
+)
+
+
+
+------------------------------------------------------------------------------------------
+
+select
+    case
+        WHEN duration >= 0 AND duration < 300 THEN '[0-5>'
+        WHEN duration >= 300 AND duration < 600 THEN '[5-10>'
+        WHEN duration >= 600 AND duration < 900 THEN '[10-15>'
+        ELSE '15 or more' 
+    end as bin,
+    count(*), total
+from Sessions
+group by bin;
