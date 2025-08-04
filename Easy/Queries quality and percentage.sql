@@ -50,9 +50,16 @@
 -- +------------+---------+-----------------------+
 
 -- Dog queries quality is ((5 / 1) + (5 / 2) + (1 / 200)) / 3 = 2.50
+
 -- Dog queries poor_ query_percentage is (1 / 3) * 100 = 33.33
 
 -- Cat queries quality equals ((2 / 5) + (3 / 3) + (4 / 7)) / 3 = 0.66
 -- Cat queries poor_ query_percentage is (1 / 3) * 100 = 33.33
 
 -- Solution
+
+select query_name, 
+    round(avg(rating / position), 2) as quality,
+    round( sum(case when rating < 3 then 1 else 0) * 100 /count(*), 2) as poor_query_percentage
+from Queries
+group by query_name

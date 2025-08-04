@@ -25,16 +25,7 @@
 
 -- The query result format is in the following example:
 
--- Project table:
--- +-------------+-------------+
--- | project_id  | employee_id |
--- +-------------+-------------+
--- | 1           | 1           |
--- | 1           | 2           |
--- | 1           | 3           |
--- | 2           | 1           |
--- | 2           | 4           |
--- +-------------+-------------+
+
 
 -- Employee table:
 -- +-------------+--------+------------------+
@@ -54,4 +45,38 @@
 -- +-------------+
 -- The first project has 3 employees while the second one has 2.
 
+
+
+
+-- Project table:
+-- +-------------+-------------+
+-- | project_id  | employee_id |
+-- +-------------+-------------+
+-- | 1           | 1           |
+-- | 1           | 2           |
+-- | 1           | 3           |
+-- | 2           | 1           |
+-- | 2           | 4           |
+-- +-------------+-------------+
+
 -- Solution
+
+
+
+select project_id
+from Project
+group by project_id
+having count(project_id) in (
+    select count(project_id)
+    from Project
+    group by project_id
+    order by count(project_id) desc
+    limit 1
+)
+
+
+
+
+
+
+
