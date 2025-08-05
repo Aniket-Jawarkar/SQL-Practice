@@ -79,3 +79,13 @@
 
 -- Solution
 
+SELECT U.name, DR.travelled_distance
+FROM Users U
+LEFT JOIN (
+    SELECT user_id, SUM(distance) AS travelled_distance
+    FROM Rides
+    GROUP BY user_id
+) AS DR
+ON U.id = DR.user_id
+ORDER BY travelled_distance DESC, U.name ASC;
+

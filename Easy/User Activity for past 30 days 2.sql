@@ -15,7 +15,7 @@
 -- Note that each session belongs to exactly one user.
  
 
--- Write an SQL query to find the average number of sessions per user for a period of 30 days ending 2019-07-27 inclusively, rounded to 2 decimal places. The sessions we want to count for a user are those with at least one activity in that time period.
+-- Write an SQL query to find the average number of sessions per user for a period of 2019-06-27 to  2019-07-27 inclusively, rounded to 2 decimal places. The sessions we want to count for a user are those with at least one activity in that time period.
 
 -- The query result format is in the following example:
 
@@ -29,12 +29,14 @@
 -- | 2       | 4          | 2019-07-20    | open_session  |
 -- | 2       | 4          | 2019-07-21    | send_message  |
 -- | 2       | 4          | 2019-07-21    | end_session   |
+
 -- | 3       | 2          | 2019-07-21    | open_session  |
 -- | 3       | 2          | 2019-07-21    | send_message  |
 -- | 3       | 2          | 2019-07-21    | end_session   |
 -- | 3       | 5          | 2019-07-21    | open_session  |
 -- | 3       | 5          | 2019-07-21    | scroll_down   |
 -- | 3       | 5          | 2019-07-21    | end_session   |
+
 -- | 4       | 3          | 2019-06-25    | open_session  |
 -- | 4       | 3          | 2019-06-25    | end_session   |
 -- +---------+------------+---------------+---------------+
@@ -49,3 +51,8 @@
 
 
 -- Solution
+session_id / user_id
+
+select round(count(distinct session_id) / count(distinct user_id),2)
+from Activity
+where activity_date between 2019-06-27 and 2019-07-27
