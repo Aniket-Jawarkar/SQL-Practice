@@ -21,3 +21,7 @@
 
 
 -- Solution
+
+select * , 
+    case when x + y >= z and y + z >= x and x + z >= y then 'Yes' else 'No' as triangle
+from triangle

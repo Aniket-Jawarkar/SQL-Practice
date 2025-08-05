@@ -46,13 +46,13 @@
 -- | 23   | Alice    | 1             |
 -- | 1    | Bob      | 7             |
 -- | 5    | Jennifer | 13            |
--- | 2    | John     | 14            |
--- | 4    | Jasmine  | 77            |
--- | 3    | Steve    | 74            |
--- | 6    | Luis     | 1             |
+-- | 2    | John     | 14            |  2
+-- | 4    | Jasmine  | 77            |  4
+-- | 3    | Steve    | 74            |  3
+-- | 6    | Luis     | 1             |  
 -- | 8    | Jonathan | 7             |
--- | 7    | Daiana   | 33            |
--- | 11   | Madelynn | 1             |
+-- | 7    | Daiana   | 33            |  7
+-- | 11   | Madelynn | 1             |  
 -- +------+----------+---------------+
 
 -- Result table:
@@ -69,3 +69,8 @@
 -- department 14, 33, 74 and 77 doesn't exist in the Departments table.
 
 -- Solution
+
+SELECT S.id , S.name
+from Departments D 
+right join Students S on D.id = S.department_id
+where D.id is null;
