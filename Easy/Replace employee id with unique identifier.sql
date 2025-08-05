@@ -35,14 +35,14 @@
 -- +----+----------+
 -- | 1  | Alice    |
 -- | 7  | Bob      |
--- | 11 | Meir     |
--- | 90 | Winston  |
--- | 3  | Jonathan |
+-- | 11 | Meir     | 11 2
+-- | 90 | Winston  | 90 3
+-- | 3  | Jonathan | 3  1
 -- +----+----------+
 
 -- EmployeeUNI table:
 -- +----+-----------+
--- | id | unique_id |
+-- | id | unique_id |   
 -- +----+-----------+
 -- | 3  | 1         |
 -- | 11 | 2         |
@@ -66,3 +66,6 @@
 -- The unique ID of Jonathan is 1.
 
 -- Solution
+    select U.unique_id, E.name
+    from Employees E 
+    left join EmployeeUNI U on E.id = U.id
