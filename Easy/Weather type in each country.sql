@@ -84,3 +84,17 @@
 -- so we don't include it in the result table. 
 
 -- Solution
+
+
+    select c.country_name, 
+        case
+            when avg(W.weather_state) <= 15 then 'Cold'
+            when avg(W.weather_state) >= 25 then 'Hot'
+            else 'Warm'
+        end as weather_type
+    
+    from Countries c
+    join Weather w on c.country_id = w.country_id
+    where w.day BETWEEN '2019-11-01' AND '2019-11-30'
+    GROUP BY 
+    c.country_name;
