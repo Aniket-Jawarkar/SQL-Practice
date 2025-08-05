@@ -19,3 +19,23 @@
 
 
 -- Solution
+
+
+select Salary as SecondHighestSalary
+from Employee
+where Salary != (
+    select Max(Salary)
+    from Employee
+) 
+order by Salary Desc
+limit 1;
+
+
+
+----------------------------------------------------------------------------------------------------------------------------
+
+SELECT MAX(Salary) AS SecondHighestSalary
+FROM Employee
+WHERE Salary < (
+    SELECT MAX(Salary) FROM Employee
+);

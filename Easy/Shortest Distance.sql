@@ -23,3 +23,8 @@
 -- Note: Every point is unique, which means there is no duplicates in table point
 
 -- Solution
+
+
+SELECT MIN(ABS(p1.x - p2.x)) AS shortest
+FROM Point p1
+JOIN Point p2 ON p1.x < p2.x;
