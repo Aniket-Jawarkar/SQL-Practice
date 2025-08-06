@@ -34,3 +34,10 @@
 -- | 6    |
 -- +------+
 -- Solution
+
+    SELECT viewer_id as id
+    from Views
+    group by viewer_id , view_date
+    HAVING count(distinct article_id) > 1
+    order by id
+    

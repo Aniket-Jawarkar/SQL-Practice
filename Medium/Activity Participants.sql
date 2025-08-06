@@ -51,3 +51,18 @@
 -- Horse Riding activity is performed by 1 friend, minimum number of participants, (Bob B.)
 -- Singing is performed by 2 friends (Victor J. and Jade W.)
 -- Solution
+
+WITH Temp AS (
+    SELECT 
+        MAX(cnt) AS maxCount,
+        MIN(cnt) AS minCount
+    FROM (
+        SELECT activity, COUNT(*) AS cnt
+        FROM Friends
+        GROUP BY activity
+    ) AS A
+)
+SELECT F.activity
+FROM Friends F, Temp T
+GROUP BY F.activity
+HAVING COUNT(*) NOT IN (T.maxCount, T.minCount);
