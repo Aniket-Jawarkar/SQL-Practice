@@ -32,6 +32,8 @@
 -- | 1       | Engineering |
 -- | 2       | Science     |
 -- | 3       | Law         |
+
+
 -- The Output should be:
 -- | dept_name   | student_number |
 -- |-------------|----------------|
@@ -39,3 +41,10 @@
 -- | Science     | 1              |
 -- | Law         | 0              |
 -- Solution
+
+
+SELECT d.dept_name , ifnull(count(s.student_id), 0) as student_number
+from department d 
+left join student s on d.dept_id = s.dept_id
+group by d.dept_name
+ORDER BY student_number DESC, d.dept_name ;
