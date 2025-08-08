@@ -22,3 +22,14 @@
 -- +------+------+
 -- The person with id '3' is a friend of people '1', '2' and '4', so he has 3 friends in total, which is the most number than any others.
 -- Solution
+
+
+SELECT id, COUNT(*) AS num
+FROM (
+  SELECT requester_id AS id FROM request_accepted
+  UNION ALL
+  SELECT accepter_id AS id FROM request_accepted
+) AS t
+GROUP BY id
+ORDER BY num DESC
+LIMIT 1;

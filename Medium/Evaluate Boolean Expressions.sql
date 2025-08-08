@@ -54,3 +54,14 @@
 -- +--------------+----------+---------------+-------+
 -- As shown, you need find the value of each boolean exprssion in the table using the variables table.
 -- Solution
+
+
+Select E.left_operand, E.operator, E.right_operand , CASE
+    WHEN (E.operator = '>' AND V1.value >  V2.value) THEN 'true'
+    WHEN (E.operator = '<' AND V1.value <  V2.value) THEN 'true'
+    WHEN (E.operator = '=' AND V1.value =  V2.value) THEN 'true'
+    ELSE 'false'
+  END AS value
+from Expressions E 
+left join variables V1 on E.left_operand = V1.name
+left join variables V2 on E.right_operand = V2.name

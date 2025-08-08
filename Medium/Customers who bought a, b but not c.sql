@@ -52,3 +52,19 @@
 -- +-------------+---------------+
 -- Only the customer_id with id 3 bought the product A and B but not the product C.
 -- Solution
+SELECT DISTINCT C.customer_id , C.customer_name
+from Customers C 
+join Orders O on C.customer_id = O.customer_id
+where customer_id in (SELECT customer_id
+from Orders
+GROUP by customer_id 
+having sum(case when product_name = 'A' then 1 else 0) > 0 and sum(case when product_name = 'B' then 1 else 0) > 0
+)
+
+and customer_id not in(
+SELECT customer_id
+from Orders
+where product_name = 'C'
+)
+ORDER BY C.customer_id;
+
