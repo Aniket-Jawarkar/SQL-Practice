@@ -30,3 +30,11 @@
 -- Notes:
 -- You may assume there is no tie, in other words there will be only one winning candidate
 -- Solution
+
+
+select C.Name
+from Candidate C 
+left join Vote V on C.id = V.CandidateId
+group by C.id
+order by count(*) desc
+limit 1

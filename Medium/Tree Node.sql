@@ -2,11 +2,11 @@
 -- Given a table tree, id is identifier of the tree node and p_id is its parent node's id.
 -- +----+------+
 -- | id | p_id |
--- +----+------+
--- | 1  | null |
--- | 2  | 1    |
--- | 3  | 1    |
--- | 4  | 2    |
+-- +----+------+            1
+-- | 1  | null |           / \
+-- | 2  | 1    |          2    3
+-- | 3  | 1    |         /  \
+-- | 4  | 2    |        4    5
 -- | 5  | 2    |
 -- +----+------+
 -- Each node in the tree can be one of three types:
@@ -36,3 +36,11 @@
 -- Note
 -- If there is only one node on the tree, you only need to output its root attributes.
 -- Solution
+
+select id , 
+    case 
+        when p_id is null then 'Root'
+        when id  not in (select p_id from tree where p_id is not null) then 'Leaf'
+        else 'Inner'
+    end as type
+from tree;

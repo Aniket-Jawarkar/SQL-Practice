@@ -1,5 +1,6 @@
 -- Question 89
 -- Table point_2d holds the coordinates (x,y) of some unique points (more than two) in a plane.
+
 -- Write a query to find the shortest distance between these points rounded to 2 decimals.
 -- | x  | y  |
 -- |----|----|
@@ -12,3 +13,12 @@
 -- | 1.00     |
 -- Note: The longest distance among all the points are less than 10000.
 -- Solution
+
+
+
+SELECT ROUND(SQRT(POW(p1.x - p2.x, 2) + POW(p1.y - p2.y, 2)), 2) AS shortest
+FROM
+    Point2D AS p1
+    JOIN Point2D AS p2 ON p1.x != p2.x OR p1.y != p2.y
+ORDER BY 1
+LIMIT 1;

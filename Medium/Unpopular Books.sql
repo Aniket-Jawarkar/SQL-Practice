@@ -19,7 +19,8 @@
 -- +----------------+---------+
 -- order_id is the primary key of this table.
 -- book_id is a foreign key to the Books table.
--- Write an SQL query that reports the books that have sold less than 10 copies in the last year, excluding books that have been available for less than 1 month from today. Assume today is 2019-06-23.
+-- Write an SQL query that reports the books that have sold less than 10 copies in the last year, 
+--excluding books that have been available for less than 1 month from today. Assume today is 2019-06-23.
 -- The query result format is in the following example:
 -- Books table:
 -- +---------+--------------------+----------------+
@@ -27,7 +28,7 @@
 -- +---------+--------------------+----------------+
 -- | 1       | "Kalila And Demna" | 2010-01-01     |
 -- | 2       | "28 Letters"       | 2012-05-12     |
--- | 3       | "The Hobbit"       | 2019-06-10     |
+-- | 3       | "The Hobbit"       | 2019-06-10     |    2019-06-23.
 -- | 4       | "13 Reasons Why"   | 2019-06-01     |
 -- | 5       | "The Hunger Games" | 2008-09-21     |
 -- +---------+--------------------+----------------+
@@ -52,3 +53,9 @@
 -- | 5         | "The Hunger Games" |
 -- +-----------+--------------------+
 -- Solution
+
+    select O.book_id , B.name
+    from books B
+    left join Orders O on B.book_id  = O.book_id
+    group by O.book_id
+    Having Sum(O.quantity) < 10 && B.available_from <= '2019-05-23'
