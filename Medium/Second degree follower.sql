@@ -23,3 +23,10 @@
 -- Followee would not follow himself/herself in all cases.
 -- Please display the result in follower's alphabet order.
 -- Solution
+
+
+select followee as follower , count(*) as num
+from follow
+group by followee
+having Followee in (select follower from follow)
+ORDER BY follower;
