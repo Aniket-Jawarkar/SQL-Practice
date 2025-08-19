@@ -27,3 +27,9 @@
 -- Important Note: For MySQL solutions, to escape reserved words used as column names, 
 -- you can use an apostrophe before and after the keyword. For example `Rank`.
 -- Solution
+
+
+select 
+    Score,
+    dense_rank() over(order by Score desc) as `Rank`
+from Scores;

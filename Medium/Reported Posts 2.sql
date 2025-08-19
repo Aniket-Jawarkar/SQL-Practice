@@ -59,3 +59,17 @@
 -- The other days had no spam reports so the average is (50 + 100) / 2 = 75%
 -- Note that the output is only one number and that we do not care about the remove dates.
 -- Solution
+
+
+SELECT 
+    ROUND(AVG(daily_percent), 2) AS average_daily_percent
+FROM (
+    SELECT 
+        A.action_date,
+        COUNT(DISTINCT CASE WHEN R.post_id IS NOT NULL THEN A.post_id END) * 100.0
+            / COUNT(DISTINCT A.post_id) AS daily_percent
+    FROM Actions A
+    LEFT JOIN Removals R ON A.post_id = R.post_id
+    WHERE A.action = 'report' AND A.extra = 'spam'
+    GROUP BY A.action_date
+) t;
