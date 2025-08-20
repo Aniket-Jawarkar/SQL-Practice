@@ -50,3 +50,13 @@
 -- Both employees with id 1 and 3 have the 
 -- most experience among the employees of the first project. For the second project, the employee with id 1 has the most experience.
 -- Solution
+
+SELECT p.project_id, p.employee_id
+FROM Project p
+JOIN Employee e ON p.employee_id = e.employee_id
+WHERE e.experience_years = (
+    SELECT MAX(e2.experience_years)
+    FROM Project p2
+    JOIN Employee e2 ON p2.employee_id = e2.employee_id
+    WHERE p2.project_id = p.project_id
+);
