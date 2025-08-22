@@ -52,3 +52,18 @@
 -- | 2019-09  | US      | 0              | 0               | 1                 | 5000               |
 -- +----------+---------+----------------+-----------------+-------------------+--------------------+
 -- Solution
+
+
+SELECT 
+    DATE_FORMAT(t.trans_date, '%Y-%m') AS month,
+    t.country,
+    COUNT(CASE WHEN t.state = 'approved' THEN 1 END) AS approved_count,
+    SUM(CASE WHEN t.state = 'approved' THEN t.amount ELSE 0 END) AS approved_amount,
+    COUNT(c.trans_id) AS chargeback_count,
+    SUM(CASE WHEN c.trans_id IS NOT NULL THEN t.amount ELSE 0 END) AS chargeback_amount
+FROM Transactions t
+LEFT JOIN Chargebacks c 
+    ON t.id = c.trans_id
+GROUP BY DATE_FORMAT(t.trans_date, '%Y-%m'), t.country
+HAVING approved_count + approved_amount + chargeback_count + chargeback_amount > 0
+ORDER BY month, country;

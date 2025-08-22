@@ -34,14 +34,7 @@
 -- Find the movie name with the highest average rating in February 2020.
 -- In case of a tie, return lexicographically smaller movie name.
 -- Query is returned in 2 rows, the query result format is in the folowing example:
--- Movies table:
--- +-------------+--------------+
--- | movie_id    |  title       |
--- +-------------+--------------+
--- | 1           | Avengers     |
--- | 2           | Frozen 2     |
--- | 3           | Joker        |
--- +-------------+--------------+
+
 -- Users table:
 -- +-------------+--------------+
 -- | user_id     |  name        |
@@ -65,6 +58,14 @@
 -- | 3           | 1            | 3            | 2020-02-22  | 
 -- | 3           | 2            | 4            | 2020-02-25  | 
 -- +-------------+--------------+--------------+-------------+
+-- Movies table:
+-- +-------------+--------------+
+-- | movie_id    |  title       |
+-- +-------------+--------------+
+-- | 1           | Avengers     |
+-- | 2           | Frozen 2     |
+-- | 3           | Joker        |
+-- +-------------+--------------+
 -- Result table:
 -- +--------------+
 -- | results      |
@@ -75,3 +76,31 @@
 -- Daniel and Maria have rated 3 movies ("Avengers", "Frozen 2" and "Joker") but Daniel is smaller lexicographically.
 -- Frozen 2 and Joker have a rating average of 3.5 in February but Frozen 2 is smaller lexicographically.
 -- Solution
+
+
+
+
+
+(
+  SELECT name AS results
+  FROM Users U
+  JOIN Movie_Rating MR ON U.user_id = MR.user_id
+  GROUP BY U.user_id, U.name
+  ORDER BY COUNT(MR.movie_id) DESC, name ASC
+  LIMIT 1
+)
+UNION ALL
+(
+  SELECT title AS results
+  FROM Movies M
+  JOIN Movie_Rating MR ON M.movie_id = MR.movie_id
+  WHERE MR.created_at BETWEEN '2020-02-01' AND '2020-02-29'
+  GROUP BY M.movie_id, M.title
+  ORDER BY AVG(MR.rating) DESC, M.title ASC
+  LIMIT 1
+);
+
+
+
+
+
