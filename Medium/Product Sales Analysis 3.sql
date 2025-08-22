@@ -46,3 +46,14 @@
 -- | 200        | 2011       | 15       | 9000  |
 -- +------------+------------+----------+-------+
 -- Solution
+
+
+    select p.product_id, s.year as first_year , s.quantity, s.price
+    from Sales s
+    right join Product p on s.product_id = p.product_id
+    and (s.product_id , s.year) in (
+        select product_id, min(year)
+        from Sales
+        group by product_id
+
+    )
