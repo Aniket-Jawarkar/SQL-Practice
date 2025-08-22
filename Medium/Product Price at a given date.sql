@@ -31,3 +31,18 @@
 -- | 3          | 10    |
 -- +------------+-------+
 -- Solution
+
+select product_id , max(new_price) as price
+from Products
+where change_date <= '2019-08-16'
+group by product_id
+
+union all
+
+select product_id , 10 as price
+from products
+group by product_id
+having min(change_date)  > '2019-08-16'
+
+
+

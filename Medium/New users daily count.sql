@@ -42,3 +42,15 @@
 -- Note that we only care about dates with non zero user count.
 -- The user with id 5 first logged in on 2019-03-01 so he's not counted on 2019-06-21.
 -- Solution
+
+
+select activity_date as login_date, count(distinct user_id) as user_count
+from Traffic
+where activity_date in (
+    select min(activity_date) as first_login
+    from Traffic
+    where activity = 'login'
+    group by user_id 
+)
+and  activity_date >= DATE_SUB('2019-06-30', INTERVAL 90 DAY)
+

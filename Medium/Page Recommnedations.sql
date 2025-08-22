@@ -61,3 +61,24 @@
 -- Page 77 is suggested from both user 2 and user 3.
 -- Page 88 is not suggested because user 1 already likes it.
 -- Solution
+
+select distinct  page_id  as recommended_page
+from Likes
+where user_id in (
+    select user1_id as friends 
+    from Friendship
+    where user2_id = 1
+
+    union 
+
+    select user2_id as friends 
+    from Friendship
+    where user1_id = 1
+) 
+and page_id not in(
+    select page_id
+    from Likes
+    where user_id = 1
+)
+
+

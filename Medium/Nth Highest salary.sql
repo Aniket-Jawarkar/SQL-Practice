@@ -14,3 +14,20 @@
 -- | 200                    |
 -- +------------------------+
 -- Solution 
+
+
+create function getNthHighestSalary(x INT)
+returns INT
+begin
+
+    declare result int;
+
+        select distinct Salary
+        into result
+        from Employee
+        order by Salary
+        limit x - 1 , 1;
+
+    return result;
+
+end;
