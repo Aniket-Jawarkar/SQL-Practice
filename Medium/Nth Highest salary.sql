@@ -25,7 +25,7 @@ begin
         select distinct Salary
         into result
         from Employee
-        order by Salary
+        order by Salary desc
         limit x - 1 , 1;
 
     return result;
