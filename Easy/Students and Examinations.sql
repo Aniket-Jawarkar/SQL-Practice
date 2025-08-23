@@ -98,3 +98,14 @@
 -- John attended Math exam 1 time, Physics exam 1 time and Programming exam 1 time.
 
 -- Solution
+
+With 
+    Cartisan as (
+        Select * 
+        from Students 
+        cross join Subjects
+    )
+Select  C.student_id , C.student_name, C.subject_name , count(E.subject_name) as attended_exams
+from Cartisan C 
+left join Examinations E on C.student_id = E.student_id AND C.subject_name = E.subject_name
+group by C.student_id, C.student_name, C.subject_name
