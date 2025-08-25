@@ -36,3 +36,26 @@
 -- Number 9 is missing in the table.
 -- Number 10 is contained in the table.
 -- Solution
+
+
+with cte as 
+ (
+    select log_id , 
+        lead(log_id , 1) over(order by log_id) as next_id
+        lag(log_id , 1) over(order by log_id) as prev_id
+    from Logs
+ ),
+ starts as (
+    select log_id as start_id   
+    from cte
+    where prev_id is null or log_id - prev_id > 1
+ ),
+ ends as (
+     select log_id as end_id   
+    from cte
+    where next_id is null or next_id - log_id > 1
+ )
+ select start_id , end_id
+ from starts s
+ join ends e on s.start_id <= e.end_id
+ order by s.start_id
