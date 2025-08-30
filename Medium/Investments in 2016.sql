@@ -30,3 +30,28 @@
 -- And its location is the same with the third record, which makes the third record fail, too.
 -- So, the result is the sum of TIV_2016 of the first and last record, which is 45.
 -- Solution
+
+
+
+WITH T AS (
+
+    SELECT TIV_2015
+    FROM insurance
+    GROUP BY TIV_2015
+    HAVING COUNT(*) > 1
+), 
+T2 AS (
+
+    SELECT i.PID, i.TIV_2015, i.TIV_2016, i.LAT, i.LON
+    FROM insurance i
+    JOIN T
+      ON i.TIV_2015 = T.TIV_2015
+    LEFT JOIN insurance i2
+      ON i.LAT = i2.LAT 
+     AND i.LON = i2.LON 
+     AND i.PID != i2.PID
+    WHERE i2.PID IS NULL
+)
+
+SELECT ROUND(SUM(TIV_2016), 2) AS TIV_2016
+FROM T2;

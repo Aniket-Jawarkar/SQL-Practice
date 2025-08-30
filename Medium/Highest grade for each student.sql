@@ -31,3 +31,11 @@
 -- | 3          | 3         | 82    |
 -- +------------+-----------+-------+
 -- Solution
+
+select student_id , min(course_id) , grade
+from (
+    select student_id, course_id. grade
+    from Enrollments
+    group by student_id
+    havinng max(grade);
+)
