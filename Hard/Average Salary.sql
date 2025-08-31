@@ -29,3 +29,34 @@
 -- The average salary of department '2' is (6000 + 10000)/2 = 8000, which is the average of employee_id '2' and '3'. So the comparison result is 'lower' since 8000 < 8333.33.
 -- With he same formula for the average salary comparison in February, the result is 'same' since both the department '1' and '2' have the same average salary with the company, which is 7000.
 -- Solution
+
+
+WITH S AS (
+    SELECT 
+        s.pay_date,
+        s.amount,
+        e.department_id,
+        e.employee_id
+    FROM Salary s
+    JOIN Employee e 
+      ON s.employee_id = e.employee_id
+),
+T AS (
+    SELECT
+        DATE_FORMAT(pay_date, '%Y-%m') AS pay_month,
+        department_id,
+        AVG(amount) OVER (PARTITION BY pay_date, department_id) AS department_avg,
+        AVG(amount) OVER (PARTITION BY pay_date) AS company_avg
+    FROM S
+)
+SELECT
+    pay_month,
+    department_id,
+    CASE
+        WHEN AVG(department_avg) > AVG(company_avg) THEN 'higher'
+        WHEN AVG(department_avg) < AVG(company_avg) THEN 'lower'
+        ELSE 'same'
+    END AS comparison
+FROM T
+GROUP BY pay_month, department_id
+ORDER BY pay_month, department_id;
